@@ -1,3 +1,3 @@
 # Facetcher Website
 
-Facetcher react application.
+Facetcher website react application.
