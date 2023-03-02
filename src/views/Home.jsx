@@ -8,7 +8,7 @@ const Home = () => {
 
     return (
         <div>
-            <h1>{t("home:title")}</h1>
+            <h1 className="text-center">{t("home:title")}</h1>
             <DrawingBoard />
         </div>
     );
