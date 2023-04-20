@@ -34,7 +34,7 @@ root.render(
     <Provider store={store}>
         <BrowserRouter>
             <Routes />
-            <TranslateButton />
+            {/* <TranslateButton /> */}
         </BrowserRouter>
     </Provider>
 );

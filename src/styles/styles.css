@@ -272,6 +272,9 @@ div.drawing-board-container {
      background-color: var(--darkGrey) !important;
      box-shadow: none !important;
 }
+.circle{
+     z-index: -55 !important;
+}
 /* -------------------------------------------------------- */
 
 /* ---------- MEDIA QUERIES START -------------------- */
