@@ -28,9 +28,10 @@ const Home = () => {
           return (
                <primitive
                     object={useLoader(GLTFLoader, Face3D).scene}
-                    rotation={[0, mousePos.x / 750 + 80, 0]}
+                    rotation={[  mousePos.y / 750 +100, mousePos.x / 750 + 80,0]}
+                    // rotation={[0, mousePos.x / 750 + 80,0]}
                     scale={[8, 8, 8]}
-                    position={[-0.5, -2, 0]}
+                    position={[-1, -2, 0]}
                />
           );
      }
@@ -87,26 +88,32 @@ const Home = () => {
                               }}
                          ></div>
                     </div>
-                    <div className="col h-100">
+                    <div className="col d-flex justify-content-center align-items-center flex-column w-100 h-100">
                          {/* <div id="3d-face"></div> */}
-                         <Canvas>
-                              <OrbitControls
-                                   enableZoom={false}
-                                   // rotateSpeed={8}
-                                   // rotation={20}
-                                   // camera={camera}
+                         {/* <div style={{ height: "80%" }}> */}
+                              <Canvas className="mb-5">
+                                   <OrbitControls
+                                        enableZoom={false}
+                                        enableRotate={false}
+                                        // rotateSpeed={8}
+                                        // rotation={false}
+                                        // camera={camera}
 
-                                   autoRotate={false}
-                                   autoRotateSpeed={1}
-                              />
-                              <ambientLight intensity={0.3} />
-                              <pointLight position={[5, 300, 50]} angle={0.2} />
-                              <Model />
-                         </Canvas>
+                                        autoRotate={false}
+                                        autoRotateSpeed={1}
+                                   />
+                                   <ambientLight intensity={0.3} />
+                                   <pointLight
+                                        position={[12, 300, 50]}
+                                        angle={0.2}
+                                   />
+                                   <Model />
+                              </Canvas>
+                         {/* </div> */}
 
-                              <button className="btn bg-cyan rounded-pill">
-                                   Login
-                              </button>
+                         <button className="btn bg-cyan rounded-pill text-light-grey w-25 fw-bold mb-5">
+                              Login
+                         </button>
                     </div>
                </div>
           </div>
