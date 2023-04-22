@@ -1,2 +1,7 @@
-// here if you want to user date util
-// or any other utils in javascript
+export const handleClickScroll = (id) => {
+     const element = document.getElementById(id);
+     if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+     }
+};
+

@@ -8,7 +8,6 @@ import { DARKGREY } from "../constants/app_colors";
 const DrawingPage = () => {
      const { t } = useTranslation();
      const [operations, setOperations] = useState(["null"]);
-     const authenticated = true;
 
      return (
           <div className="w-100 vh-100 d-flex justify-content-center align-items-center">
