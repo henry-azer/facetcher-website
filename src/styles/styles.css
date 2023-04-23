@@ -278,10 +278,10 @@ div.drawing-board-container {
 .circle {
      z-index: -55 !important;
 }
-.login-circle {
+.btn-circle {
      transition: all 0.5s;
 }
-.login-btn:hover .login-circle {
+.circle-btn:hover .btn-circle {
      transform: translateX(35%) !important;
 
      background-color: var(--cyan) !important;
@@ -327,6 +327,16 @@ div.drawing-board-container {
 .small-logo {
      transform: scale(0.8) !important;
 }
+.up-scale{
+     transform: scale(1.5);
+     z-index: 111111111;
+}
+.down-scale{
+     transform: scale(0.5);
+}
+/* #section-2{
+     z-index: -66 !important;
+} */
 /* -------------------------------------------------------- */
 
 /* ---------- MEDIA QUERIES START -------------------- */

@@ -26,7 +26,7 @@ const Header = () => {
      return (
           <div
                className={`w-100 px-5 position-fixed top-0 header ${
-                    !wide && "bg-dark-grey2"
+                    !wide ? "bg-dark-grey2" : ""
                }`}
                style={{ height: `${wide ? "100px" : "50px"}` }}
           >
@@ -48,7 +48,7 @@ const Header = () => {
                          )}
                          <img
                               src={LogoText}
-                              className={!wide && "small-logo"}
+                              className={!wide ? "small-logo" : ""}
                               alt="Logo"
                          />
                     </div>
