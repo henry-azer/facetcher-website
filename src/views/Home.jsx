@@ -7,86 +7,29 @@ import { OrbitControls } from "@react-three/drei";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { handleClickScroll } from "../utils/util";
 import Header from "../components/header/header";
-import { CYAN } from "../constants/app_colors";
+import { CYAN, LIGHTGREY } from "../constants/app_colors";
 import FacetcherCarousel from "../components/carousel/carousel";
+import { useNavigate } from "react-router-dom";
+import {
+     Dialog,
+     DialogActions,
+     DialogContent,
+     DialogContentText,
+     DialogTitle,
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 const Home = () => {
      const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-     // const [yPosition, setYPosition] = useState(0);
 
      const [authenticated, setAuthenticated] = useState(false);
+     const [open, setOpen] = useState(false);
+
      const drawings = [1, 2, 3, 4, 5, 6, 7];
-     // const slides = [
-     //      {
-     //           key: uuidv4(),
-     //           content: (
-     //                <div
-     //                     className=" rounded-4 bg-light-grey position-relative overflow-hidden"
-     //                     style={{ width: 150, height: 150 }}
-     //                >
-     //                     <div className="position-absolute top-0 start-0 w-100 h-100 bg-dark-grey opacity-50"></div>
-     //                     <h1 className=" display-4 text-dark-grey2">1</h1>
-     //                </div>
-     //           ),
-     //      },
-     //      {
-     //           key: uuidv4(),
-     //           content: (
-     //                <img src="https://picsum.photos/800/800/?random" alt="2" />
-     //           ),
-     //      },
-     //      {
-     //           key: uuidv4(),
-     //           content: (
-     //                <img src="https://picsum.photos/600/800/?random" alt="3" />
-     //           ),
-     //      },
-     //      {
-     //           key: uuidv4(),
-     //           content: (
-     //                <img src="https://picsum.photos/800/500/?random" alt="4" />
-     //           ),
-     //      },
-     //      {
-     //           key: uuidv4(),
-     //           content: (
-     //                <img src="https://picsum.photos/800/800/?random" alt="5" />
-     //           ),
-     //      },
-     //      {
-     //           key: uuidv4(),
-     //           content: (
-     //                <img src="https://picsum.photos/500/800/?random" alt="6" />
-     //           ),
-     //      },
-     //      {
-     //           key: uuidv4(),
-     //           content: (
-     //                <img src="https://picsum.photos/800/600/?random" alt="7" />
-     //           ),
-     //      },
-     //      {
-     //           key: uuidv4(),
-     //           content: (
-     //                <img src="https://picsum.photos/800/800/?random" alt="8" />
-     //           ),
-     //      },
-     // ];
-     // const scene = new THREE.Scene();
-     // const camera = new THREE.PerspectiveCamera(
-     //      75,
-     //      window.innerWidth / window.innerHeight,
-     //      0.1,
-     //      1000
-     // );
 
-     // const renderer = new THREE.WebGLRenderer();
-     // renderer.setSize(window.innerWidth, window.innerHeight);
-
-     // const camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
+     const navigate = useNavigate();
 
      function Model() {
-          // const gltf = useLoader(GLTFLoader, "");
           return (
                <primitive
                     object={useLoader(GLTFLoader, Face3D).scene}
@@ -95,7 +38,6 @@ const Home = () => {
                          mousePos.x / 750 + 80,
                          0,
                     ]}
-                    // rotation={[0, mousePos.x / 750 + 80,0]}
                     scale={[9, 9, 9]}
                     position={[-0.5, -2, 0]}
                />
@@ -103,7 +45,7 @@ const Home = () => {
      }
 
      useEffect(() => {
-          // if (window.scrollY > 0) window.scrollTo(0, 0);
+          if (window.scrollY > 0) window.scrollTo(0, 0);
           const handleMouseMove = (event) => {
                if (window.scrollY < 500)
                     setMousePos({ x: event.clientX, y: event.clientY });
@@ -115,17 +57,6 @@ const Home = () => {
                window.removeEventListener("mousemove", handleMouseMove);
           };
      }, []);
-
-     // console.log("new update ");
-     // useEffect(() => {
-     //      if (window.scrollY > yPosition) console.log("down");
-     //      else console.log("up");
-     //      setYPosition(window.scrollY);
-     // }, [window.scrollY]);
-
-     // document.getElementById('3d-face').appendChild(renderer.domElement);
-     // document.body.appendChild(renderer.domElement);
-     // console.log(yPosition);
 
      return (
           <div className="w-100">
@@ -169,16 +100,10 @@ const Home = () => {
                          ></div>
                     </div>
                     <div className="col d-flex justify-content-center align-items-center flex-column w-100 h-100">
-                         {/* <div id="3d-face"></div> */}
-                         {/* <div style={{ height: "80%" }}> */}
                          <Canvas className="my-5">
                               <OrbitControls
                                    enableZoom={false}
                                    enableRotate={false}
-                                   // rotateSpeed={8}
-                                   // rotation={false}
-                                   // camera={camera}
-
                                    autoRotate={false}
                                    autoRotateSpeed={1}
                               />
@@ -186,41 +111,83 @@ const Home = () => {
                               <pointLight
                                    position={[12, 300, 50]}
                                    angle={0.2}
-                                   // color={CYAN}
                               />
                               <pointLight
                                    position={[-mousePos.x, -mousePos.y, 50]}
-                                   // angle={0.2}
                                    intensity={0.5}
                                    color={CYAN}
                               />
                               <Model />
                          </Canvas>
-                         {/* </div> */}
-
-                         {/* <button className="btn btn-lg bg-cyan rounded-pill text-light-grey w-25 fw-bold ms-5 mb-5">
-                              Login
-                         </button> */}
 
                          {!authenticated ? (
-                              <div
-                                   onClick={() => setAuthenticated(true)}
-                                   className="w-20 fw-bold ms-5 mb-5 border-top-0 border-start-0 border-end-0 light-grey-border cursor-pointer position-relative circle-btn"
-                              >
-                                   <h1 className=" display-6">Login</h1>
-                                   <div
-                                        className=" bg-dark-grey2 rounded-circle position-absolute circle btn-circle"
-                                        style={{
-                                             width: 80,
-                                             height: 80,
-                                             bottom: "-2px",
-                                             left: "60px",
-                                             // bottom: `${mousePos.y / 30 + 120}px`,
-                                             // left: `${mousePos.x / 30 + 20}px`,
+                              <>
+                                   <Dialog
+                                        open={open}
+                                        onClose={() => setOpen(false)}
+                                        PaperProps={{
+                                             sx: {
+                                                  bgcolor: LIGHTGREY,
+                                                  // color: DARKGREY2,
+                                                  paddingY: 2,
+                                                  borderRadius: 3,
+                                             },
                                         }}
-                                   ></div>
-                                   {/* <hr className=" text-light-grey" /> */}
-                              </div>
+                                   >
+                                        {" "}
+                                        <DialogTitle className="d-flex w-100 px-5 justify-content-between fw-bold">
+                                             Login
+                                             <CloseIcon
+                                                  className="cursor-pointer text-dark-grey2"
+                                                  onClick={() => setOpen(false)}
+                                             />
+                                        </DialogTitle>
+                                        <DialogContent className="d-flex w-100 px-5 flex-column">
+                                             <DialogContentText className="pb-3 text-dark-grey2">
+                                                  Please, Use your generated
+                                                  account that you received from
+                                                  us.
+                                             </DialogContentText>
+
+                                             <div>
+                                                  <button
+                                                       className="btn bg-cyan rounded-pill w-25 text-light-grey"
+                                                       onClick={() => {
+                                                            setOpen(false);
+                                                            setAuthenticated(
+                                                                 true
+                                                            );
+                                                            setTimeout(
+                                                                 () =>
+                                                                      handleClickScroll(
+                                                                           "section-2"
+                                                                      ),
+                                                                 500
+                                                            );
+                                                       }}
+                                                  >
+                                                       Login
+                                                  </button>
+                                             </div>
+                                        </DialogContent>
+                                        <DialogActions></DialogActions>
+                                   </Dialog>
+                                   <div
+                                        onClick={() => setOpen(true)}
+                                        className="w-20 fw-bold ms-5 mb-5 border-top-0 border-start-0 border-end-0 light-grey-border cursor-pointer position-relative circle-btn"
+                                   >
+                                        <h1 className=" display-6">Login</h1>
+                                        <div
+                                             className=" bg-dark-grey2 rounded-circle position-absolute circle btn-circle"
+                                             style={{
+                                                  width: 80,
+                                                  height: 80,
+                                                  bottom: "-2px",
+                                                  left: "60px",
+                                             }}
+                                        ></div>
+                                   </div>
+                              </>
                          ) : (
                               <div
                                    onClick={() =>
@@ -246,21 +213,6 @@ const Home = () => {
                                    Your History
                               </h1>
 
-                              {/* {drawings.map((element) => ( */}
-
-                              {/* <Carousel
-                                        // margin="0 auto"
-                                        // height="100%"
-                                        // width="100%"
-                                        slides={slides}
-                                        offsetRadius={8}
-                                        showArrows={true}
-                                        showNavigation={true}
-
-                                        // className="w-100 h-25"
-                                   /> */}
-
-                              {/* ))} */}
                               <div className="w-100 h-75">
                                    <FacetcherCarousel>
                                         {drawings.map((element) => (
@@ -272,7 +224,9 @@ const Home = () => {
                                                        height: 150,
                                                   }}
                                              >
-                                                  <div className="position-absolute top-0 start-0 w-100 h-100 bg-dark-grey opacity-50">{element}</div>
+                                                  <div className="position-absolute top-0 start-0 w-100 h-100 bg-dark-grey opacity-50">
+                                                       {element}
+                                                  </div>
                                              </div>
                                         ))}
                                    </FacetcherCarousel>
@@ -280,8 +234,7 @@ const Home = () => {
 
                               <div
                                    style={{ zIndex: 1 }}
-                                   // onClick={() => setAuthenticated(true)}
-
+                                   onClick={() => navigate("/drawing-page")}
                                    className="w-25 d-flex justify-content-end fw-bold ms-5 mb-5 border-top-0 border-start-0 border-end-0 light-grey-border cursor-pointer position-relative circle-btn"
                               >
                                    <h1 className=" display-6">Start Drawing</h1>
@@ -294,7 +247,6 @@ const Home = () => {
                                              left: "-11px",
                                         }}
                                    ></div>
-                                   {/* <hr className=" text-light-grey" /> */}
                               </div>
                          </div>
                     </div>
