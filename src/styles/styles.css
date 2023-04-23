@@ -82,6 +82,12 @@ input:focus-visible {
 .light-grey-border {
      border: solid var(--lightGrey) !important;
 }
+.dark-grey-border {
+     border: solid var(--darkGrey) !important;
+}
+.dark-grey2-border {
+     border: solid var(--darkGrey2) !important;
+}
 .w-20 {
      width: 20% !important;
 }
@@ -314,12 +320,12 @@ div.drawing-board-container {
      width: 100%;
      bottom: -15px;
      left: 0;
-     position: absolute; 
+     position: absolute;
      transition: all 0.5s;
      /* transition-delay: 0.2s; */
 }
 .header-element.wide::before {
- background: var(--darkGrey2) ;
+     background: var(--darkGrey2);
 }
 .header-element:hover::before {
      transform: translateX(100%);
@@ -327,11 +333,11 @@ div.drawing-board-container {
 .small-logo {
      transform: scale(0.8) !important;
 }
-.up-scale{
+.up-scale {
      transform: scale(1.5);
      z-index: 111111111;
 }
-.down-scale{
+.down-scale {
      transform: scale(0.5);
 }
 /* #section-2{

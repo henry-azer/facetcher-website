@@ -131,11 +131,13 @@ const Home = () => {
                                                   // color: DARKGREY2,
                                                   paddingY: 2,
                                                   borderRadius: 3,
+                                                  width: 700,
+                                                  height: 350,
                                              },
                                         }}
                                    >
                                         {" "}
-                                        <DialogTitle className="d-flex w-100 px-5 justify-content-between fw-bold">
+                                        <DialogTitle className="d-flex w-100 px-5 text-dark-grey2 justify-content-between fw-bold">
                                              Login
                                              <CloseIcon
                                                   className="cursor-pointer text-dark-grey2"
@@ -149,26 +151,38 @@ const Home = () => {
                                                   us.
                                              </DialogContentText>
 
-                                             <div>
+                                             <form
+                                                  onSubmit={(e) => {
+                                                       e.preventDefault();
+                                                       setOpen(false);
+                                                       setAuthenticated(true);
+                                                       setTimeout(
+                                                            () =>
+                                                                 handleClickScroll(
+                                                                      "section-2"
+                                                                 ),
+                                                            500
+                                                       );
+                                                  }}
+                                                  className="mt-5 d-flex justify-content-between align-items-center flex-column h-75"
+                                             >
+                                                  <input
+                                                       type="email"
+                                                       className="bg-transparent grey-border border-top-0 border-start-0 border-end-0 pe-3 ps-1 w-100 text-dark-grey2"
+                                                       placeholder="Email"
+                                                  />
+                                                  <input
+                                                       type="password"
+                                                       className="bg-transparent grey-border border-top-0 border-start-0 border-end-0 pe-3 ps-1 w-100 text-dark-grey2 my-4"
+                                                       placeholder="Password"
+                                                  />
                                                   <button
-                                                       className="btn bg-cyan rounded-pill w-25 text-light-grey"
-                                                       onClick={() => {
-                                                            setOpen(false);
-                                                            setAuthenticated(
-                                                                 true
-                                                            );
-                                                            setTimeout(
-                                                                 () =>
-                                                                      handleClickScroll(
-                                                                           "section-2"
-                                                                      ),
-                                                                 500
-                                                            );
-                                                       }}
+                                                       type="submit"
+                                                       className="btn bg-cyan rounded-pill w-50 text-light-grey"
                                                   >
                                                        Login
                                                   </button>
-                                             </div>
+                                             </form>
                                         </DialogContent>
                                         <DialogActions></DialogActions>
                                    </Dialog>
