@@ -25,6 +25,9 @@
 input:focus-visible {
      outline: none !important;
 }
+textarea {
+     resize: none !important;
+  }
 .bg-grey {
      background-color: var(--grey) !important;
 }
@@ -244,7 +247,7 @@ div.drawing-board-container {
      fill: var(--cyan);
 }
 .drawing-board-toolbar-iconLabel{
-     color: var(--cyan);
+     color: var(--cyan) !important;
 }
 .circle {
      z-index: -55 !important;

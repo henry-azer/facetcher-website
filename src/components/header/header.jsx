@@ -29,7 +29,7 @@ const Header = (props) => {
                className={`w-100 px-5 top-0 header ${
                     !wide ? "bg-dark-grey2 shadow" : ""
                } ${props.shadow ? "shadow" : ""}
-               ${props.fixed ? "position-fixed" : ""}
+               ${props.fixed ? "position-fixed" : "mb-4"}
                ${props.bg ? "bg-dark-grey2" : ""}
                `}
                style={{
