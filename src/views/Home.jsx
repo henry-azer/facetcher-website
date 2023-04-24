@@ -21,6 +21,7 @@ import CloseIcon from "@mui/icons-material/Close";
 
 const Home = () => {
      const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+     const [mousePosSecTwo, setMousePosSecTwo] = useState({ x: 0, y: 0 });
 
      const [authenticated, setAuthenticated] = useState(false);
      const [open, setOpen] = useState(false);
@@ -45,10 +46,15 @@ const Home = () => {
      }
 
      useEffect(() => {
-          if (window.scrollY > 0) window.scrollTo(0, 0);
+          // if (window.scrollY > 0) window.scrollTo(0, 0);
           const handleMouseMove = (event) => {
-               if (window.scrollY < 500)
+               if (window.scrollY < 500) {
                     setMousePos({ x: event.clientX, y: event.clientY });
+                    setMousePosSecTwo({ x: 0, y: 0 });
+               } else {
+                    setMousePos({ x: 0, y: 0 });
+                    setMousePosSecTwo({ x: event.clientX, y: event.clientY });
+               }
           };
 
           window.addEventListener("mousemove", handleMouseMove);
@@ -60,7 +66,7 @@ const Home = () => {
 
      return (
           <div className="w-100">
-               <Header />
+               <Header fixed />
                <div
                     className="w-100 vh-100 row justify-content-center align-items-center"
                     id="section-1"
@@ -219,10 +225,10 @@ const Home = () => {
                </div>
                {authenticated && (
                     <div
-                         className="vh-100 w-100 bg-dark-grey2 d-flex justify-content-center align-items-center"
+                         className="vh-100 w-100 bg-dark-grey2 d-flex justify-content-center align-items-center position-relative"
                          id="section-2"
                     >
-                         <div className="w-75 h-75 d-flex justify-content-center align-items-center flex-column">
+                         <div className="w-75 h-75 d-flex justify-content-center align-items-center flex-column position-relative">
                               <h1 className="display-6 align-self-start">
                                    Your History
                               </h1>
@@ -245,7 +251,7 @@ const Home = () => {
                                         ))}
                                    </FacetcherCarousel>
                               </div>
-
+                              {/* <RandomBlob size={40000} /> */}
                               <div
                                    style={{ zIndex: 1 }}
                                    onClick={() => navigate("/drawing-page")}

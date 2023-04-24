@@ -3,7 +3,7 @@ import Logo from "../../assets/logo/logo.svg";
 import LogoText from "../../assets/logo/logo-text.svg";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const Header = () => {
+const Header = (props) => {
      const headerElements = ["home", "about us", "help"];
 
      const navigate = useNavigate();
@@ -25,10 +25,22 @@ const Header = () => {
 
      return (
           <div
-               className={`w-100 px-5 position-fixed top-0 header ${
-                    !wide ? "bg-dark-grey2" : ""
-               }`}
-               style={{ height: `${wide ? "100px" : "50px"}` }}
+          id="header"
+               className={`w-100 px-5 top-0 header ${
+                    !wide ? "bg-dark-grey2 shadow" : ""
+               } ${props.shadow ? "shadow" : ""}
+               ${props.fixed ? "position-fixed" : ""}
+               ${props.bg ? "bg-dark-grey2" : ""}
+               `}
+               style={{
+                    height: `${
+                         props.height
+                              ? `${props.height}`
+                              : wide
+                              ? "100px"
+                              : "50px"
+                    }`,
+               }}
           >
                <div className="w-100 h-100 px-5 py-3 d-flex justify-content-between align-items-center">
                     <div
@@ -57,9 +69,9 @@ const Header = () => {
                          {headerElements.map((element, index) => (
                               <h1
                                    key={index}
-                                   className={`${
-                                        wide ? "fs-5" : "fs-6 wide"
-                                   } m-0 border-top-0 border-start-0 border-end-0 light-grey-border text-uppercase header-element cursor-pointer position-relative`}
+                                   className={`${wide ? "fs-5" : "fs-6 wide"} 
+                                   ${props.bg ? "wide" : ""}
+                                   m-0 border-top-0 border-start-0 border-end-0 light-grey-border text-uppercase header-element cursor-pointer position-relative`}
                               >
                                    {element}
                               </h1>
