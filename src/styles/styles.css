@@ -27,7 +27,7 @@ input:focus-visible {
 }
 textarea {
      resize: none !important;
-  }
+}
 .bg-grey {
      background-color: var(--grey) !important;
 }
@@ -172,10 +172,6 @@ p {
 }
 /* ----- GLOBAL PROPS END ----- */
 
-.user-profile-pic {
-     width: 230px;
-     height: 230px;
-}
 
 td {
      padding: 20px !important;
@@ -243,10 +239,10 @@ div.drawing-board-container {
      background-color: var(--darkGrey) !important;
      box-shadow: none !important;
 }
-.drawing-board-toolbar-icon svg{
+.drawing-board-toolbar-icon svg {
      fill: var(--cyan);
 }
-.drawing-board-toolbar-iconLabel{
+.drawing-board-toolbar-iconLabel {
      color: var(--cyan) !important;
 }
 .circle {
@@ -309,6 +305,27 @@ div.drawing-board-container {
 .down-scale {
      transform: scale(0.5);
 }
+.gradient-background {
+     background: linear-gradient(
+          230deg,
+          var(--darkCyan),
+          var(--cyan),
+          var(--cyan)
+     );
+     background-size: 180% 180%;
+     animation: gradient-animation 4s ease infinite;
+}
+
+.user-profile-pic:hover .gradient-background {
+     background: linear-gradient(
+          230deg,
+          var(--darkGrey2),
+          var(--grey),
+          var(--grey)
+     );
+     background-size: 180% 180%;
+     animation: gradient-animation 4s ease infinite;
+}
 /* #section-2{
      z-index: -66 !important;
 } */
@@ -331,6 +348,18 @@ div.drawing-board-container {
 }
 
 /* -------------- ANIMATIONS START------------------------- */
+
+@keyframes gradient-animation {
+     0% {
+          background-position: 0% 50%;
+     }
+     50% {
+          background-position: 100% 0%;
+     }
+     100% {
+          background-position: 0% 50%;
+     }
+}
 
 @keyframes myAnim {
      0%,
