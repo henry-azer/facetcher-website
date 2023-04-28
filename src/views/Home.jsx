@@ -46,7 +46,7 @@ const Home = () => {
      }
 
      useEffect(() => {
-          // if (window.scrollY > 0) window.scrollTo(0, 0);
+          if (window.scrollY > 0) window.scrollTo(0, 0);
           const handleMouseMove = (event) => {
                if (window.scrollY < 500) {
                     setMousePos({ x: event.clientX, y: event.clientY });
