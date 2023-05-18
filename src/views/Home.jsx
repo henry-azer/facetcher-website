@@ -10,26 +10,23 @@ import Header from "../components/header/header";
 import { CYAN, LIGHTGREY } from "../constants/app_colors";
 import FacetcherCarousel from "../components/carousel/carousel";
 import { useNavigate } from "react-router-dom";
-import {
-     Dialog,
-     DialogActions,
-     DialogContent,
-     DialogContentText,
-     DialogTitle,
-} from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
+import { isUserAuthenticated } from "../authentication/check-authentication";
+import { getCurrentUserSubmissions } from "../store/actions/submission/submission-actions";
+import { useDispatch, useSelector } from "react-redux";
 
 const Home = () => {
      const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
      const [mousePosSecTwo, setMousePosSecTwo] = useState({ x: 0, y: 0 });
 
      const [authenticated, setAuthenticated] = useState(false);
-     const [open, setOpen] = useState(false);
-
-     const drawings = [1, 2, 3, 4, 5, 6, 7];
+     const [dataFetched, setDataFetched] = useState(false);
 
      const navigate = useNavigate();
-
+     const dispatch = useDispatch();
+     const submissions = useSelector(
+          (state) => state.submission.allCurrentSubmissions
+     );
+     // console.log(submissions);
      function Model() {
           return (
                <primitive
@@ -45,6 +42,13 @@ const Home = () => {
           );
      }
 
+     useEffect(() => {
+          if (isUserAuthenticated() === "true") {
+               dispatch(getCurrentUserSubmissions());
+               setAuthenticated(true);
+               setDataFetched(true);
+          }
+     }, []);
      useEffect(() => {
           if (window.scrollY > 0) window.scrollTo(0, 0);
           const handleMouseMove = (event) => {
@@ -66,7 +70,7 @@ const Home = () => {
 
      return (
           <div className="w-100">
-               <Header fixed />
+               <Header fixed auth={authenticated ? true : false} />
                <div
                     className="w-100 vh-100 row justify-content-center align-items-center"
                     id="section-1"
@@ -126,32 +130,35 @@ const Home = () => {
                               <Model />
                          </Canvas>
 
-                         <div
-                              onClick={() => navigate('/login')}
-                              className="w-20 fw-bold ms-5 mb-5 border-top-0 border-start-0 border-end-0 light-grey-border cursor-pointer position-relative circle-btn"
-                         >
-                              <h1 className=" display-6">Login</h1>
+                         {authenticated ? (
                               <div
-                                   className=" bg-dark-grey2 rounded-circle position-absolute circle btn-circle"
-                                   style={{
-                                        width: 80,
-                                        height: 80,
-                                        bottom: "-2px",
-                                        left: "60px",
-                                   }}
-                              ></div>
-                         </div>
-                         {/* <div
-                                    onClick={() =>
-                                         handleClickScroll("section-2")
-                                    }
-                                    className="w-20 fw-bold ms-5 mb-5 cursor-pointer position-relative"
-                               >
-                                    <h1 className=" fs-5 scroll-down">
-                                         Scroll Down{" "}
-                                         <KeyboardArrowDownIcon className="down-arrow" />
-                                    </h1>
-                               </div> */}
+                                   onClick={() =>
+                                        handleClickScroll("section-2")
+                                   }
+                                   className="w-20 fw-bold ms-5 mb-5 cursor-pointer position-relative"
+                              >
+                                   <h1 className=" fs-5 scroll-down">
+                                        Scroll Down{" "}
+                                        <KeyboardArrowDownIcon className="down-arrow" />
+                                   </h1>
+                              </div>
+                         ) : (
+                              <div
+                                   onClick={() => navigate("/login")}
+                                   className="w-20 fw-bold ms-5 mb-5 border-top-0 border-start-0 border-end-0 light-grey-border cursor-pointer position-relative circle-btn"
+                              >
+                                   <h1 className=" display-6">Login</h1>
+                                   <div
+                                        className=" bg-dark-grey2 rounded-circle position-absolute circle btn-circle"
+                                        style={{
+                                             width: 80,
+                                             height: 80,
+                                             bottom: "-2px",
+                                             left: "60px",
+                                        }}
+                                   ></div>
+                              </div>
+                         )}
                     </div>
                </div>
                {authenticated && (
@@ -160,26 +167,57 @@ const Home = () => {
                          id="section-2"
                     >
                          <div className="w-75 h-75 d-flex justify-content-center align-items-center flex-column position-relative">
-                              <h1 className="display-6 align-self-start">
-                                   Your History
-                              </h1>
+                              <div className="w-100 d-flex justify-content-between align-items-center">
+                                   <h1 className="display-6">
+                                        Submissions History
+                                   </h1>
+                                   <p
+                                        onClick={() => navigate("/history")}
+                                        className="text-decoration-underline cursor-pointer"
+                                   >
+                                        more submissions
+                                   </p>
+                              </div>
 
                               <div className="w-100 h-75">
                                    <FacetcherCarousel>
-                                        {drawings.map((element) => (
-                                             <div
-                                                  key={element}
-                                                  className="rounded-4 bg-light-grey position-relative overflow-hidden"
-                                                  style={{
-                                                       width: 150,
-                                                       height: 150,
-                                                  }}
-                                             >
-                                                  <div className="position-absolute top-0 start-0 w-100 h-100 bg-dark-grey opacity-50">
-                                                       {element}
+                                        {submissions &&
+                                             submissions.map((submission) => (
+                                                  <div
+                                                       key={submission}
+                                                       className="rounded-4 bg-light-grey position-relative overflow-hidden"
+                                                       style={{
+                                                            width: 150,
+                                                            height: 150,
+                                                       }}
+                                                  >
+                                                       <img
+                                                            onClick={() => {
+                                                                 navigate(
+                                                                      `/submissions/` +
+                                                                           submission.title
+                                                                                .replace(
+                                                                                     /\s+/g,
+                                                                                     "-"
+                                                                                )
+                                                                                .toLowerCase(),
+                                                                      {
+                                                                           state: {
+                                                                                submission:
+                                                                                     submission,
+                                                                           },
+                                                                      }
+                                                                 );
+                                                            }}
+                                                            className="w-100 h-100 cursor-pointer"
+                                                            src={
+                                                                 submission
+                                                                      .inputImage
+                                                                      .imageUrl
+                                                            }
+                                                       />
                                                   </div>
-                                             </div>
-                                        ))}
+                                             ))}
                                    </FacetcherCarousel>
                               </div>
                               {/* <RandomBlob size={40000} /> */}

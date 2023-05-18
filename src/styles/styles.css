@@ -330,6 +330,19 @@ div.drawing-board-container {
      background-color: rgba(30, 30, 30, 0.4);
      backdrop-filter: blur(10px) !important;
 }
+.row.vertical-divider div[class^="col-"] + div[class^="col-"] {
+     /* border-left: 3px solid #0396d1; */
+     height: 100%;
+}
+
+.pagination {
+     list-style: none;
+}
+
+.active-num {
+     width: 22px;
+     height: 22px;
+}
 
 /* .user-profile-pic:hover .gradient-background {
      background: linear-gradient(

@@ -19,7 +19,7 @@ const Header = (props) => {
      const headerElements = [
           { name: "home", link: "/" },
           { name: "History", link: "/history" },
-          { name: "About us", link: "/about-us" },
+          // { name: "About us", link: "/about-us" },
           { name: "help", link: "/help" },
      ];
 

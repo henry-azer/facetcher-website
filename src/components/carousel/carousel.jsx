@@ -14,7 +14,6 @@ const FacetcherCarousel = (props) => {
      return (
           <div className="w-100 h-100">
                <div className=" w-100 h-100  d-flex justify-content-center align-items-center">
-                    {/* {props.children} */}
                     <ArrowBackIosIcon
                          className="cursor-pointer text-light-grey"
                          onClick={() => {
@@ -23,56 +22,95 @@ const FacetcherCarousel = (props) => {
                               console.log(num);
                          }}
                     />
-                    {props.children.length >= 3 && (
-                         <div className="w-75 d-flex justify-content-between align-items-center">
-                              {props.children.length >= 5 && (
-                                   <div className="down-scale opacity-50">
-                                        {
-                                             props.children[
-                                                  mod(
-                                                       num - 2,
-                                                       props.children.length
-                                                  )
-                                             ]
-                                        }
+                    {props.children && (
+                         <>
+                              {props.children.length !== 0 ? (
+                                   <>
+                                        {props.children.length >= 3 && (
+                                             <div className="w-75 d-flex justify-content-between align-items-center">
+                                                  {props.children.length >=
+                                                       5 && (
+                                                       <div className="down-scale opacity-50">
+                                                            {
+                                                                 props.children[
+                                                                      mod(
+                                                                           num -
+                                                                                2,
+                                                                           props
+                                                                                .children
+                                                                                .length
+                                                                      )
+                                                                 ]
+                                                            }
+                                                       </div>
+                                                  )}
+                                                  <div className=" opacity-75">
+                                                       {
+                                                            props.children[
+                                                                 mod(
+                                                                      num - 1,
+                                                                      props
+                                                                           .children
+                                                                           .length
+                                                                 )
+                                                            ]
+                                                       }
+                                                  </div>
+                                                  <div className="up-scale mx-5">
+                                                       {
+                                                            props.children[
+                                                                 mod(
+                                                                      num,
+                                                                      props
+                                                                           .children
+                                                                           .length
+                                                                 )
+                                                            ]
+                                                       }
+                                                  </div>
+                                                  <div className=" opacity-75">
+                                                       {
+                                                            props.children[
+                                                                 mod(
+                                                                      num + 1,
+                                                                      props
+                                                                           .children
+                                                                           .length
+                                                                 )
+                                                            ]
+                                                       }
+                                                  </div>
+                                                  {props.children.length >=
+                                                       5 && (
+                                                       <div className="down-scale opacity-50">
+                                                            {
+                                                                 props.children[
+                                                                      mod(
+                                                                           num +
+                                                                                2,
+                                                                           props
+                                                                                .children
+                                                                                .length
+                                                                      )
+                                                                 ]
+                                                            }
+                                                       </div>
+                                                  )}
+                                             </div>
+                                        )}
+                                   </>
+                              ) : (
+                                   <div
+                                        className="d-flex justify-content-center align-items-center"
+                                        style={{ width: 450, height: 450 }}
+                                   >
+                                        <h1 className="display-6 text-light-grey">
+                                             No Submissions Yet
+                                        </h1>
                                    </div>
                               )}
-                              <div className=" opacity-75">
-                                   {
-                                        props.children[
-                                             mod(num - 1, props.children.length)
-                                        ]
-                                   }
-                              </div>
-                              <div className="up-scale mx-5">
-                                   {
-                                        props.children[
-                                             mod(num, props.children.length)
-                                        ]
-                                   }
-                              </div>
-                              <div className=" opacity-75">
-                                   {
-                                        props.children[
-                                             mod(num + 1, props.children.length)
-                                        ]
-                                   }
-                              </div>
-                              {props.children.length >= 5 && (
-                                   <div className="down-scale opacity-50">
-                                        {
-                                             props.children[
-                                                  mod(
-                                                       num + 2,
-                                                       props.children.length
-                                                  )
-                                             ]
-                                        }
-                                   </div>
-                              )}
-                         </div>
+                         </>
                     )}
-
                     <ArrowForwardIosIcon
                          className="cursor-pointer text-light-grey"
                          onClick={() => {
