@@ -323,6 +323,13 @@ div.drawing-board-container {
      background-size: 180% 180%;
      /* animation: gradient-animation 4s ease infinite; */
 }
+.login-form {
+     /* background-color: rgb(from var(--lightGrey) r g b / 0.3); */
+     /* background-color: var(--lightGrey); */
+     /* background-color: rgba(234, 234, 234,0.3); */
+     background-color: rgba(30, 30, 30, 0.4);
+     backdrop-filter: blur(10px) !important;
+}
 
 /* .user-profile-pic:hover .gradient-background {
      background: linear-gradient(

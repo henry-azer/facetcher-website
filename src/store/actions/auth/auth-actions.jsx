@@ -1,83 +1,110 @@
 import axios from "axios";
-import delayAdapterEnhancer from "axios-delay";
 
 import {
-    LOGIN_REQUEST,
-    LOGIN_FAILURE,
-    LOGIN_SUCCEEDED,
-    CLEAR_LOGIN_DETAILS,
+     LOGIN_REQUEST,
+     LOGIN_FAILURE,
+     LOGIN_SUCCEEDED,
+     GET_CURRENT_USER_REQUEST,
+     GET_CURRENT_USER_SUCCEEDED,
+     GET_CURRENT_USER_FAILURE,
+     LOGOUT_REQUEST,
+     LOGOUT_SUCCEEDED,
+     LOGOUT_FAILURE,
 } from "../../types";
 
 import Cookies from "universal-cookie";
+import {
+     APIs_URL,
+     ACCESS_TOKEN,
+     IS_USER_AUTHENTICATED,
+} from "../../../constants/app_constants";
 
 const cookies = new Cookies();
 
-const URL = "http://localhost:8080/api/auth";
+const URL = APIs_URL.STAGING;
 
-const api = axios.create({
-    adapter: delayAdapterEnhancer(axios.defaults.adapter),
-});
-
-export const authenticateUser = (values) => (dispatch) => {
-    dispatch({ type: LOGIN_REQUEST });
-
-    api.post(
-        `${URL}/login`,
-        {
-            email: values.email,
-            password: values.password,
-        },
-        { delay: 2000 }
-    )
-        .then(function(response) {
-            if (response.data.status === 200) {
-                dispatch({
-                    type: LOGIN_SUCCEEDED,
-                    payload: response.data.body,
-                });
-
-                if (values.keepLogged) {
-                    cookies.set("iua_cin", "true");
-                    cookies.set("at_cin", `${response.data.body.token}`);
-                    cookies.set(
-                        "aun_cin",
-                        `${response.data.body.user.username}`
-                    );
-                    cookies.set("aui_cin", `${response.data.body.user.id}`);
-                } else {
-                    cookies.set("iua_cin", "true", {
-                        maxAge: "14400",
+export const getCurrentUser = () => (dispatch) => {
+     dispatch({ type: GET_CURRENT_USER_REQUEST });
+     axios.get(`${URL}/auth/current`)
+          .then((response) => {
+               if (response.data.success) {
+                    dispatch({
+                         type: GET_CURRENT_USER_SUCCEEDED,
+                         payload: response.data.body,
                     });
-                    cookies.set("at_cin", `${response.data.body.token}`, {
-                        maxAge: "14400",
-                    });
-
-                    cookies.set(
-                        "aun_cin",
-                        `${response.data.body.user.username}`,
-                        {
-                            maxAge: "14400",
-                        }
-                    );
-                    cookies.set("aui_cin", `${response.data.body.user.id}`, {
-                        maxAge: "14400",
-                    });
-                }
-            } else {
-                dispatch({
-                    type: LOGIN_FAILURE,
-                    payload: response.data.message,
-                });
-            }
-        })
-        .catch(function(error) {
-            console.log(error);
-        });
+               }
+          })
+          .catch((error) => {
+               dispatch({
+                    type: GET_CURRENT_USER_FAILURE,
+                    payload: error.response.data.message,
+               });
+          });
 };
 
-export function clearLoginDetails() {
-    return {
-        type: CLEAR_LOGIN_DETAILS,
-        payload: null,
-    };
-}
+export const authenticateUser = (user) => (dispatch) => {
+     dispatch({ type: LOGIN_REQUEST });
+     axios.post(`${URL}/auth/log-in`, {
+          email: user.email,
+          password: user.password,
+     })
+          .then((response1) => {
+               if (response1.data.success) {
+                    cookies.set(
+                         ACCESS_TOKEN,
+                         `${response1.data.body.accessToken}`
+                    );
+                    axios.get(`${URL}/auth/current`).then((response2) => {
+                         if (response2.data.success) {
+                              if (response2.data.body.markedAsDeleted) {
+                                   cookies.set(IS_USER_AUTHENTICATED, "false");
+                                   cookies.set(ACCESS_TOKEN, ACCESS_TOKEN);
+                                   dispatch({
+                                        type: LOGIN_FAILURE,
+                                        payload: "This account has been deactivated, Please contact the administrator.",
+                                   });
+                              } else {
+                                   cookies.set(IS_USER_AUTHENTICATED, "true");
+                                   cookies.set(
+                                        ACCESS_TOKEN,
+                                        `${response1.data.body.accessToken}`
+                                   );
+                                   dispatch({
+                                        type: LOGIN_SUCCEEDED,
+                                        payload: response2.data.body,
+                                   });
+                              }
+                         }
+                    });
+               }
+          })
+          .catch((error) => {
+               cookies.set(IS_USER_AUTHENTICATED, "false");
+               dispatch({
+                    type: LOGIN_FAILURE,
+                    payload: error.response.data.message,
+               });
+          });
+};
+
+export const logoutUser = () => (dispatch) => {
+     dispatch({ type: LOGOUT_REQUEST });
+     axios.get(`${URL}/auth/log-out`)
+          .then((response) => {
+               if (response.data.success) {
+                    cookies.remove(ACCESS_TOKEN);
+                    cookies.set(IS_USER_AUTHENTICATED, "false");
+                    dispatch({
+                         type: LOGOUT_SUCCEEDED,
+                         payload: response.data.body,
+                    });
+                    window.location.reload();
+               }
+          })
+          .catch((error) => {
+               dispatch({
+                    type: LOGOUT_FAILURE,
+                    payload: error.response.data.message,
+               });
+          });
+};

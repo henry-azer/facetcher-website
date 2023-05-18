@@ -72,12 +72,12 @@ const Home = () => {
                     id="section-1"
                >
                     <div className="col position-relative d-flex justify-content-center align-items-center flex-column">
-                         <div className="w-75 d-flex flex-column">
-                              <h1 className="display-1">From Sketch</h1>
-                              <h1 className="text-cyan fw-bold display-1 align-self-end">
+                         <div className="w-50 d-flex flex-column">
+                              <h1 className="display-4">From Sketch</h1>
+                              <h1 className="text-cyan fw-bold display-4 align-self-end">
                                    To Life
                               </h1>
-                              <figcaption className=" blockquote-footer text-grey">
+                              <figcaption className="blockquote-footer text-grey mt-1">
                                    <cite title="Source Title">
                                         FACETCHER ...{" "}
                                    </cite>
@@ -89,19 +89,19 @@ const Home = () => {
                          <div
                               className=" bg-cyan rounded-circle position-absolute circle"
                               style={{
-                                   width: 150,
-                                   height: 150,
-                                   bottom: `${mousePos.y / 30 + 120}px`,
-                                   left: `${mousePos.x / 30 + 20}px`,
+                                   width: 100,
+                                   height: 100,
+                                   bottom: `${mousePos.y / 55 + 150}px`,
+                                   left: `${mousePos.x / 55 + 120}px`,
                               }}
                          ></div>
                          <div
                               className="bg-dark-grey2 rounded-circle position-absolute circle"
                               style={{
-                                   width: 300,
-                                   height: 300,
-                                   top: `${mousePos.x / 30 + 40}px`,
-                                   right: `${mousePos.y / 30}px`,
+                                   width: 200,
+                                   height: 200,
+                                   top: `${mousePos.x / 55 + 40}px`,
+                                   right: `${mousePos.y / 55 + 65}px`,
                               }}
                          ></div>
                     </div>
@@ -126,101 +126,32 @@ const Home = () => {
                               <Model />
                          </Canvas>
 
-                         {!authenticated ? (
-                              <>
-                                   <Dialog
-                                        open={open}
-                                        onClose={() => setOpen(false)}
-                                        PaperProps={{
-                                             sx: {
-                                                  bgcolor: LIGHTGREY,
-                                                  // color: DARKGREY2,
-                                                  paddingY: 2,
-                                                  borderRadius: 3,
-                                                  width: 700,
-                                                  height: 350,
-                                             },
-                                        }}
-                                   >
-                                        {" "}
-                                        <DialogTitle className="d-flex w-100 px-5 text-dark-grey2 justify-content-between fw-bold">
-                                             Login
-                                             <CloseIcon
-                                                  className="cursor-pointer text-dark-grey2"
-                                                  onClick={() => setOpen(false)}
-                                             />
-                                        </DialogTitle>
-                                        <DialogContent className="d-flex w-100 px-5 flex-column">
-                                             <DialogContentText className="pb-3 text-dark-grey2">
-                                                  Please, Use your generated
-                                                  account that you received from
-                                                  us.
-                                             </DialogContentText>
-
-                                             <form
-                                                  onSubmit={(e) => {
-                                                       e.preventDefault();
-                                                       setOpen(false);
-                                                       setAuthenticated(true);
-                                                       setTimeout(
-                                                            () =>
-                                                                 handleClickScroll(
-                                                                      "section-2"
-                                                                 ),
-                                                            500
-                                                       );
-                                                  }}
-                                                  className="mt-5 d-flex justify-content-between align-items-center flex-column h-75"
-                                             >
-                                                  <input
-                                                       type="email"
-                                                       className="bg-transparent grey-border border-top-0 border-start-0 border-end-0 pe-3 ps-1 w-100 text-dark-grey2"
-                                                       placeholder="Email"
-                                                  />
-                                                  <input
-                                                       type="password"
-                                                       className="bg-transparent grey-border border-top-0 border-start-0 border-end-0 pe-3 ps-1 w-100 text-dark-grey2 my-4"
-                                                       placeholder="Password"
-                                                  />
-                                                  <button
-                                                       type="submit"
-                                                       className="btn bg-cyan rounded-pill w-50 text-light-grey"
-                                                  >
-                                                       Login
-                                                  </button>
-                                             </form>
-                                        </DialogContent>
-                                        <DialogActions></DialogActions>
-                                   </Dialog>
-                                   <div
-                                        onClick={() => setOpen(true)}
-                                        className="w-20 fw-bold ms-5 mb-5 border-top-0 border-start-0 border-end-0 light-grey-border cursor-pointer position-relative circle-btn"
-                                   >
-                                        <h1 className=" display-6">Login</h1>
-                                        <div
-                                             className=" bg-dark-grey2 rounded-circle position-absolute circle btn-circle"
-                                             style={{
-                                                  width: 80,
-                                                  height: 80,
-                                                  bottom: "-2px",
-                                                  left: "60px",
-                                             }}
-                                        ></div>
-                                   </div>
-                              </>
-                         ) : (
+                         <div
+                              onClick={() => navigate('/login')}
+                              className="w-20 fw-bold ms-5 mb-5 border-top-0 border-start-0 border-end-0 light-grey-border cursor-pointer position-relative circle-btn"
+                         >
+                              <h1 className=" display-6">Login</h1>
                               <div
-                                   onClick={() =>
-                                        handleClickScroll("section-2")
-                                   }
-                                   className="w-20 fw-bold ms-5 mb-5 cursor-pointer position-relative"
-                              >
-                                   <h1 className=" fs-5 scroll-down">
-                                        Scroll Down{" "}
-                                        <KeyboardArrowDownIcon className="down-arrow" />
-                                   </h1>
-                              </div>
-                         )}
+                                   className=" bg-dark-grey2 rounded-circle position-absolute circle btn-circle"
+                                   style={{
+                                        width: 80,
+                                        height: 80,
+                                        bottom: "-2px",
+                                        left: "60px",
+                                   }}
+                              ></div>
+                         </div>
+                         {/* <div
+                                    onClick={() =>
+                                         handleClickScroll("section-2")
+                                    }
+                                    className="w-20 fw-bold ms-5 mb-5 cursor-pointer position-relative"
+                               >
+                                    <h1 className=" fs-5 scroll-down">
+                                         Scroll Down{" "}
+                                         <KeyboardArrowDownIcon className="down-arrow" />
+                                    </h1>
+                               </div> */}
                     </div>
                </div>
                {authenticated && (
